@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}フィード編集 - RSSリーダー{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h4>フィード編集</h4>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    <div class="mb-3">
+                        <label for="title" class="form-label">タイトル</label>
+                        <input type="text" class="form-control" id="title" name="title" value="{{ feed.title }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="url" class="form-label">URL</label>
+                        <input type="text" class="form-control" id="url" value="{{ feed.url }}" disabled>
+                        <div class="form-text">URLは変更できません</div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">保存</button>
+                    <a href="{{ url_for('feeds.dashboard') }}" class="btn btn-secondary">キャンセル</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

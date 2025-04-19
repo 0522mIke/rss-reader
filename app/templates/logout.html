@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="logout-container">
+    <h1>ログアウト</h1>
+    <div class="logout-box">
+      <a href="{{ url_for('feeds.dashboard') }}" class="btn">TOPへ</a>
+    </div>
+  </div>
+{% endblock %}

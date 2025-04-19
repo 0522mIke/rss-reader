@@ -1,0 +1,143 @@
+.navbar {
+  background-color: #FF6B6B;
+  color: white;
+}
+
+
+.feed-sidebar .card-header {
+  background-color: #fadf72;
+  color: #2D2D2D;
+  font-weight: 600;
+}
+
+.category-card .card-header {
+  background-color: #fadf72;
+  color: #2D2D2D;
+  font-weight: 600;
+}
+
+.card-header-gradient {
+  background: linear-gradient(90deg, #FF6B6B, #fadf72);
+  color: white;
+}
+
+body {
+  background-color: #FFF8F0;
+  font-family: 'Poppins','Avenir','Helvetica Neue','Helvetica','Arial','Hiragino Sans','ヒラギノ角ゴシック',YuGothic,'Yu Gothic','メイリオ', Meiryo, 'MS PGothic',sans-serif;
+}
+
+.card {
+  background-color: #fffdf9;
+  border-radius: 12px;
+}
+
+.btn {
+  font-weight: 600;
+  border-radius: 10px;
+  padding: 12px 20px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.btn-pink {
+  background-color: #ff6b6b;
+  color: white;
+  border: none;
+}
+
+.btn-pink:hover {
+  background-color: #e55b5b;
+  color: white;
+}
+
+.btn-add {
+  background-color: #6BCB77;
+  color: white;
+  border: none;
+}
+
+.btn-add:hover {
+  background-color: #5cae66;
+  color: white;
+}
+
+.btn-update {
+  background-color: #4D96FF;
+  color: white;
+  border: none;
+}
+
+.btn-update:hover {
+  background-color: #418cd7;
+  color: white;
+}
+
+.btn-lg {
+  font-size: 1.2rem;
+  padding: 15px 25px;
+  margin: 10px;
+}
+
+.container {
+  margin-top: 40px;
+}
+
+h1 {
+  color: #ff6b6b;
+  text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+  }
+h2 {
+  color: #ff7f50;
+ }
+
+p.lead {
+  color: #333;
+
+}
+h3 {
+  color: #ff6b6b;
+ }
+ .logout-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 30px;
+}
+
+.logout-container h1 {
+  color: #333;
+  font-size: 1.3rem;
+  margin-bottom: 20px;
+}
+
+.logout-box {
+  display: flex;
+  justify-content: center;
+  background-color: #ff7f50;
+  color: white;
+  padding: 10px 30px;
+  border-radius: 8px;
+}
+
+
+.header-buttons .login-btn {
+  border: 1px solid #007bff;
+  color: #007bff;
+  background-color: transparent;
+}
+
+.header-buttons .login-btn:hover {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.header-buttons .register-btn {
+  background-color: #ff9800;
+  color: #fff;
+  border: none;
+}
+
+.header-buttons .register-btn:hover {
+  background-color: #e68900;
+}

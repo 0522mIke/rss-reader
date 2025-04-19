@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block title %}フィード追加 - RSSリーダー{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h4>フィードを追加</h4>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('feeds.add_feed') }}">
+                    <!-- フィードURL入力 -->
+                    <div class="mb-3">
+                        <label for="feed_url" class="form-label">フィードURLまたはウェブサイトURL</label>
+                        <input type="text" class="form-control" id="feed_url" name="feed_url" 
+                               placeholder="https://example.com/feed.xml" required>
+                        <div class="form-text">
+                            RSSフィードのURLか、RSSフィードを検出したいウェブサイトのURLを入力してください
+                        </div>
+                    </div>
+                
+                    <!-- ジャンル選択 -->
+                    <div class="mb-4">
+                        <label for="category" class="form-label">ジャンル</label>
+                        <select class="form-select" id="category_id" name="category_id" required>
+                            {% for category in categories %}
+                                <option value="{{ category.id }}">{{ category.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                
+                    <!-- ボタン類 -->
+                    <div class="d-flex">
+                        <button type="submit" class="btn btn-primary me-3">追加</button>
+                        <a href="{{ url_for('feeds.dashboard') }}" class="btn btn-secondary">キャンセル</a>
+                    </div>
+                </form>
+                
+                
+                {% if feed_suggestions %}
+                    <hr>
+                    <h5>検出されたRSSフィード</h5>
+                    <div class="list-group mt-3">
+                        {% for feed in feed_suggestions %}
+                            <form method="POST" action="{{ url_for('feeds.add_feed') }}" class="list-group-item">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="mb-1">{{ feed.title }}</h6>
+                                        <small class="text-muted">{{ feed.url }}</small>
+                                    </div>
+                                    <input type="hidden" name="feed_url" value="{{ feed.url }}">
+                                    <button type="submit" class="btn btn-sm btn-outline-primary">追加</button>
+                                </div>
+                            </form>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // URLからRSSフィードを自動検出する機能（オプション）
+    document.getElementById('feed_url').addEventListener('blur', function() {
+        const url = this.value.trim();
+        if (url && !url.includes('/feed') && !url.includes('.xml') && !url.includes('rss')) {
+            const formData = new FormData();
+            formData.append('website_url', url);
+            
+            fetch("{{ url_for('feeds.detect_feed') }}", {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.feeds && data.feeds.length > 0) {
+                    // ここにフィード検出結果の表示ロジックを追加できます
+                    console.log("検出されたフィード:", data.feeds);
+                }
+            });
+        }
+    });
+</script>
+{% endblock %}

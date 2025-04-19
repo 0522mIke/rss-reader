@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %}ホーム - RSSサイトリーダー{% endblock %}
+
+{% block content %}
+
+
+<div class="text-center my-5 py-5">
+    <img src="{{ url_for('static', filename='images/rsspic3.png') }}" alt="RSSイラスト" class="img-fluid mb-4" style="max-width: 280px;">
+    <h1 class="mb-3 fw-bold" style="font-size: 3.5rem; color: #ff6b6b;">Create your feed world</h1>
+    <p class="mb-4 my-5" style="color: #555; font-size: 1.2rem;">Your personalized RSS reader, simple & beautiful.</p>
+    <div class="d-flex justify-content-center gap-3 flex-wrap mb-3">
+        <a href="{{ url_for('auth.demo_login') }}" class="btn btn-lg btn-pink">デモユーザーで試す</a>
+        <a href="{{ url_for('auth.login') }}" class="btn btn-outline-secondary btn-lg">ログイン</a>
+        <a href="{{ url_for('auth.register') }}" class="btn btn-primary btn-lg">新規登録</a>
+    </div>
+    <small class="text-muted">デモは登録不要ですぐ使えます</small>
+</div>
+
+
+<div class="container py-5 my-5">
+    <div class="row align-items-center">
+        <div class="col-md-6 mb-4 mb-md-0 px-4">
+            <h2 class="mb-3" style="color: #ff7f50;">Why FeedMe?</h2>
+            <p style="color: #333; font-size: 1.1rem; line-height: 1.8;">
+                毎日の情報収集、もっとスムーズに。<br>
+                FeedMe!は直感的なUIと自由に好きなサイトを登録し、忙しいあなたをサポートします。
+            </p>
+            <ul class="list-unstyled mt-4" style="font-size: 1.1rem;">
+                <li>・広告無し</li>
+                <li>・高速表示</li>
+                <li>・シンプル設計</li>
+            </ul>
+        </div>
+        <div class="col-md-6 my-5 text-center">
+            <img src="{{ url_for('static', filename='images/feedmepic.jpg') }}" alt="RSS表示のスクショ" class="img-fluid rounded shadow">
+        </div>
+    </div>
+</div>
+
+
+<div class="bg-light py-5">
+    <div class="container text-center">
+        <h3 class="mb-4" style="color: #4fc3f7;">Choice your favorite sites</h3>
+        <p>News sites · Blogs · Industry publications · Podcasts</p>
+        <div class="d-flex justify-content-center gap-4 mt-3 flex-wrap">
+            <i class="bi bi-newspaper fs-3 text-danger"></i>
+            <i class="bi bi-rss fs-3 text-warning"></i>
+            <i class="bi bi-journal-code fs-3 text-success"></i>
+        </div>
+    </div>
+</div>
+
+
+<div class="container my-5 py-4">
+    <div class="row align-items-center">
+      
+      <div class="col-md-5 text-center mb-4 mb-md-0">
+        <img src="{{ url_for('static', filename='images/rsspic2.png') }}" alt="イラスト" class="img-fluid rounded" style="max-width: 70%;">
+      </div>
+  
+      
+      <div class="col-md-7">
+        <h3 class="mb-3" style="color: #ff6b6b;">おねがい</h3>
+        <p style="font-size: 1.1rem; color: #333;">
+          こちらのRSSリーダーはポートフォリオ用プロジェクトのため、以下の点にご注意ください：
+        </p>
+        <ul class="list-unstyled" style="padding-left: 20px;">
+          <li style="font-size: 1.1rem; color: #333; margin-bottom: 5px;">・ユーザー作成数と登録できるサイトには上限があります。</li>
+          <li style="font-size: 1.1rem; color: #333; margin-bottom: 5px;">・RSS非対応サイトは登録できません</li>
+          <li style="font-size: 1.1rem; color: #333; margin-bottom: 5px;">・フィードは最新15件まで取得され、更新時に古いフィードは削除されます。</li>
+          <li style="font-size: 1.1rem; color: #333; margin-bottom: 5px;">・継続的な利用を想定していません。停止・削除される可能性があります。</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+
+{% endblock %}

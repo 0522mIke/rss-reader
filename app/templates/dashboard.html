@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+
+{% block title %}ダッシュボード - FeedeMe{% endblock %}
+
+{% block head %}
+{{ super() }}
+<!-- Google Fonts: Poppins -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+<link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-3">
+        <!-- フィード一覧 -->
+        <div class="card mb-3 feed-sidebar">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">購読中</h5>
+                <div>
+                    <a href="{{ url_for('feeds.update_user_feeds') }}" class="btn btn-sm btn-update" title="更新">
+                        <i class="fas fa-sync-alt"></i> 更新
+                    </a>
+                    <a href="{{ url_for('feeds.add_feed') }}" class="btn btn-sm btn-add">
+                        <i class="fas fa-plus"></i> 追加
+                    </a>
+                </div>
+            </div>
+            <div class="list-group list-group-flush">
+                {% if feeds %}
+                    {% for feed in feeds %}
+                        <a href="{{ url_for('feeds.dashboard', feed_id=feed.id) }}" 
+                           class="list-group-item list-group-item-action 
+                                  {% if selected_feed and selected_feed.id == feed.id %}active{% endif %}">
+                            <i class="fas fa-rss me-2"></i>{{ feed.title or feed.url }}
+                        </a>
+                    {% endfor %}
+                {% else %}
+                    <div class="list-group-item text-center text-muted">
+                        フィードがありません
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- カテゴリー -->
+        <div class="card category-card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-tags me-2"></i>カテゴリー</h5>
+            </div>
+            <div class="list-group list-group-flush">
+                {% for category in categories %}
+                    <a href="{{ url_for('feeds.filter_by_category', category_name=category.name) }}"
+                       class="list-group-item list-group-item-action">
+                        <i class="fas fa-tag me-2"></i>{{ category.name }}
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- 記事一覧 -->
+    <div class="col-md-9">
+        {% if selected_feed %}
+            <div class="card mb-4">
+                <div class="card-header card-header-gradient d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0"><i class="fas fa-newspaper me-2"></i>{{ selected_feed.title or selected_feed.url }}</h5>
+                    <div>
+                        <a href="{{ url_for('feeds.edit_feed', feed_id=selected_feed.id) }}" class="btn btn-sm btn-outline-light me-1">
+                            <i class="fas fa-pen"></i> 編集
+                        </a>
+                        <form action="{{ url_for('feeds.delete_feed', feed_id=selected_feed.id) }}" 
+                              method="POST" 
+                              class="d-inline" 
+                              onsubmit="return confirm('このフィードを削除してもよろしいですか？');">
+                            <button type="submit" class="btn btn-sm btn-outline-danger">
+                                <i class="fas fa-trash-alt"></i> 削除
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            {% if articles %}
+                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
+                    {% for article in articles %}
+                        <div class="col">
+                            <div class="card h-100 article-card d-flex flex-column">
+                                <div class="card-body d-flex flex-column p-3">
+                                    <h6 class="card-title">
+                                        <i class="fas fa-arrow-right me-2 text-success"></i>
+                                        <a href="{{ article.url }}" target="_blank" class="text-decoration-none">
+                                            {{ article.title|truncate(80) }}
+                                        </a>
+                                    </h6>
+                                    <p class="card-text text-muted small">
+                                        <i class="fas fa-calendar-alt me-1"></i>
+                                        {% if article.published_date %}
+                                            {% if article.published_date.tzinfo %}
+                                                {{ article.published_date.astimezone(timezone(timedelta(hours=9))).strftime('%Y/%m/%d %H:%M') }}
+                                            {% else %}
+                                                {{ article.published_date.strftime('%Y/%m/%d %H:%M') }}
+                                            {% endif %}
+                                        {% else %}
+                                            日付不明
+                                        {% endif %}
+                                    </p>
+                                    {% if article.summary %}
+                                        <p class="card-text small">{{ article.summary|safe|truncate(100) }}</p>
+                                    {% endif %}
+                                    <div class="mt-auto">
+                                    <a href="{{ article.url }}" target="_blank" class="btn btn-sm btn-read">
+                                        <i class="fas fa-book-open me-1"></i>読む
+                                    </a>
+                                  </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="alert alert-info">
+                    このフィードには記事がありません
+                </div>
+            {% endif %}
+        {% else %}
+            <div class="text-center py-5">
+                <h3 class="text-muted">←左側の購読中メニューから表示したいフィードを選択、または追加してください</h3>
+                <a href="{{ url_for('feeds.add_feed') }}" class="btn btn-add mt-3">
+                    <i class="fas fa-plus me-1"></i>フィードを追加
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
