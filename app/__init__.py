@@ -28,10 +28,6 @@ def create_app(config_class=Config):
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_object(config_class)
     
-    # 先頭の重複コードを削除
-    # app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
-    # app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
     db.init_app(app)
     login_manager.init_app(app)
 
@@ -52,7 +48,7 @@ def create_app(config_class=Config):
             logger.error(f"Database creation error: {str(e)}")
             raise
 
-        # ここで初めてモデルをインポート（循環インポートを避けるため）
+        
         from app.models import User, Category, Feed, Article
         from werkzeug.security import generate_password_hash
 
@@ -61,7 +57,7 @@ def create_app(config_class=Config):
             demo_user = User(
                 username='demo',
                 password=generate_password_hash('demopass'),
-                is_demo=True  # デモユーザーフラグをセット
+                is_demo=True
             )
             db.session.add(demo_user)
             db.session.commit()
