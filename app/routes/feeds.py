@@ -59,11 +59,13 @@ def add_feed():
         return redirect(url_for('feeds.dashboard'))
     
     return render_template('add_feed.html', categories=categories)
+
 @feeds_bp.route('/category/<int:category_id>')
 @login_required
 def filter_by_category_id(category_id):
     category = Category.query.get_or_404(category_id)
-    feeds = Feed.query.filter_by(category_id=category.id).all()
+    feeds = Feed.query.filter_by(category_id=category.id, user_id=current_user.id).all()
+
     return render_template('dashboard.html', 
                           feeds=feeds, 
                           articles=[],
