@@ -49,8 +49,8 @@
             </div>
             <div class="list-group list-group-flush">
                 {% for category in categories %}
-                    <a href="{{ url_for('feeds.filter_by_category', category_name=category.name) }}"
-                       class="list-group-item list-group-item-action">
+                <a href="{{ url_for('feeds.filter_by_category_id', category_id=category.id) }}"
+                class="list-group-item list-group-item-action">
                         <i class="fas fa-tag me-2"></i>{{ category.name }}
                     </a>
                 {% endfor %}

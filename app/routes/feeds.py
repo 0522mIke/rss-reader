@@ -3,7 +3,6 @@ from app import db
 from app.models import Feed, Article, Category
 from app.utils.feed_handler import add_feed_for_user, update_feeds
 from flask_login import login_required, current_user
-from urllib.parse import unquote
 
 feeds_bp = Blueprint('feeds', __name__, url_prefix='/feeds')
 
@@ -35,7 +34,6 @@ def dashboard():
 @feeds_bp.route('/<category_name>')
 @login_required
 def filter_by_category(category_name):
-    decoded_name = unquote(category_name)
     category = Category.query.filter_by(name=category_name).first_or_404()
     feeds = Feed.query.filter_by(category_id=category.id).all()
     return render_template('dashboard.html', 
@@ -61,6 +59,16 @@ def add_feed():
         return redirect(url_for('feeds.dashboard'))
     
     return render_template('add_feed.html', categories=categories)
+@feeds_bp.route('/category/<int:category_id>')
+@login_required
+def filter_by_category_id(category_id):
+    category = Category.query.get_or_404(category_id)
+    feeds = Feed.query.filter_by(category_id=category.id).all()
+    return render_template('dashboard.html', 
+                          feeds=feeds, 
+                          articles=[],
+                          selected_feed=None,
+                          categories=Category.query.all())
 
 @feeds_bp.route('/<int:feed_id>/delete', methods=['POST'])
 @login_required
