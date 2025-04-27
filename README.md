@@ -54,7 +54,7 @@ IT業界の進化は凄まじく、最新情報を追うだけでも一苦労。
 - 開発時：SQLite（ローカル開発用に使用）
 - 本番：Supabase（PostgreSQLベースのBaaS）
 
-![ダッシュボード](app/supabase-ER.png)
+![ダッシュボード](app/static/images/supabase-ER.png)
 
 ### デプロイ
 
